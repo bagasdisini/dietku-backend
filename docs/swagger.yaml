@@ -1,0 +1,112 @@
+basePath: /
+definitions:
+  handler.LoginForm:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  handler.RegisterForm:
+    properties:
+      email:
+        type: string
+      fullname:
+        type: string
+      password:
+        type: string
+    type: object
+  handler.UserUpdateForm:
+    properties:
+      email:
+        type: string
+      fullname:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Dietku Backend API
+  title: Dietku Backend API
+paths:
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      operationId: login
+      parameters:
+      - description: login body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LoginForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Login
+      tags:
+      - Auth
+  /api/register:
+    post:
+      consumes:
+      - application/json
+      operationId: register
+      parameters:
+      - description: register body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RegisterForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Register
+      tags:
+      - Auth
+  /api/user:
+    get:
+      operationId: user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: User
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      operationId: user-update
+      parameters:
+      - description: update body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UserUpdateForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: Update me
+      tags:
+      - User
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
