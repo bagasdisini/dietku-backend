@@ -2,6 +2,7 @@ package main
 
 import (
 	handlerAuth "dietku-backend/cmd/auth/handler"
+	handlerBlog "dietku-backend/cmd/blog/handler"
 	"dietku-backend/cmd/log"
 	handlerUser "dietku-backend/cmd/user/handler"
 	"dietku-backend/config"
@@ -45,6 +46,7 @@ func main() {
 
 	handlerAuth.NewAuthHandler(e, db)
 	handlerUser.NewUserApi(e, db)
+	handlerBlog.NewBlogApi(e, db)
 
 	server := fmt.Sprintf("%v:3000", conf.AppHost)
 	if conf.AppPort != "" {

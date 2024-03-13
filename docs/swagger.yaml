@@ -1,5 +1,16 @@
 basePath: /
 definitions:
+  handler.BlogForm:
+    properties:
+      category:
+        items:
+          type: string
+        type: array
+      content:
+        type: string
+      header:
+        type: string
+    type: object
   handler.LoginForm:
     properties:
       email:
@@ -30,6 +41,133 @@ info:
   description: Dietku Backend API
   title: Dietku Backend API
 paths:
+  /api/blog:
+    get:
+      operationId: blog
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get All Blogs
+      tags:
+      - Blog
+    post:
+      consumes:
+      - application/json
+      operationId: blog-create
+      parameters:
+      - description: blog body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.BlogForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: Create Blog
+      tags:
+      - Blog
+  /api/blog/{id}:
+    delete:
+      operationId: blog-delete
+      parameters:
+      - description: Blog ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Blog
+      tags:
+      - Blog
+    get:
+      operationId: blog-get
+      parameters:
+      - description: Blog ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get Blog
+      tags:
+      - Blog
+    put:
+      consumes:
+      - application/json
+      operationId: blog-update
+      parameters:
+      - description: Blog ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: blog body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.BlogForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: Update Blog
+      tags:
+      - Blog
+  /api/blog/category/{category}:
+    get:
+      operationId: blog-category
+      parameters:
+      - description: Category
+        in: path
+        name: category
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get Blogs By Category
+      tags:
+      - Blog
+  /api/blog/user/{userId}:
+    get:
+      operationId: blog-user
+      parameters:
+      - description: User ID
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get Blogs By User
+      tags:
+      - Blog
   /api/login:
     post:
       consumes:

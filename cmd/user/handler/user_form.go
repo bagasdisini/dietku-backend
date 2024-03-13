@@ -9,7 +9,7 @@ import (
 type UserUpdateForm struct {
 	Email    string `form:"email" json:"email"`
 	Password string `form:"password" json:"password"`
-	FullName string `json:"fullname" bson:"fullname"`
+	FullName string `form:"fullname" json:"fullname"`
 }
 
 func NewUserUpdateForm(c echo.Context) (*UserUpdateForm, error) {
