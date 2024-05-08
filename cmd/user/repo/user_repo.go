@@ -12,7 +12,10 @@ import (
 type User struct {
 	ID        primitive.ObjectID `json:"_id" bson:"_id"`
 	Email     string             `json:"email" bson:"email"`
-	FullName  string             `json:"fullname" bson:"fullname"`
+	FirstName string             `json:"firstName" bson:"firstName"`
+	LastName  string             `json:"lastName" bson:"lastName"`
+	BirthDay  string             `json:"birthDay" bson:"birthDay"`
+	Phone     string             `json:"phone" bson:"phone"`
 	Password  string             `json:"password" bson:"password"`
 	CreatedAt time.Time          `json:"createdAt" bson:"createdAt"`
 	IsDeleted bool               `json:"isDeleted" bson:"isDeleted"`

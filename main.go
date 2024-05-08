@@ -10,8 +10,10 @@ import (
 	"dietku-backend/version"
 	"fmt"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	echoswagger "github.com/swaggo/echo-swagger"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -36,15 +38,43 @@ func main() {
 	e := echo.New()
 	log.SetLogger(e)
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     strings.Split(conf.AllowOrigins, ","),
+		AllowCredentials: true,
+	}))
+
 	e.GET("/", func(c echo.Context) error {
 		return c.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
+	})
+	e.GET("/google", func(c echo.Context) error {
+		return c.HTML(http.StatusOK, fmt.Sprintf(`
+<!doctype html>
+<html>
+<head>
+    <title>Google SignIn</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> <!-- load bulma css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <style>
+        body{ padding-top:70px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron text-center text-success">
+        <h1><span class="fa fa-lock"></span> Social Authentication</h1>
+        <p>Login or Register with:</p>
+        <a href="https://dietku-api.up.railway.app/api/login-google" class="btn btn-danger"><span class="fa fa-google"></span> Sign In with Google</a>
+    </div>
+</div>
+</body>
+</html>`))
 	})
 
 	docs.SwaggerInfo.Version = version.Version
 	docs.SwaggerInfo.Host = conf.SwaggerHost
 	e.GET("/swagger/*", echoswagger.WrapHandler)
 
-	handlerAuth.NewAuthHandler(e, db)
+	handlerAuth.NewAuthHandler(e, db, conf)
 	handlerUser.NewUserApi(e, db)
 	handlerBlog.NewBlogApi(e, db)
 

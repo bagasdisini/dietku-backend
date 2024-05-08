@@ -15,9 +15,10 @@ import (
 var mySigningKey = []byte("the-secret-of-kalimdor")
 
 type UserClaims struct {
-	ID       primitive.ObjectID `json:"_id" bson:"_id"`
-	Email    string             `json:"email" bson:"email"`
-	FullName string             `json:"fullName" bson:"fullName"`
+	ID        primitive.ObjectID `json:"_id" bson:"_id"`
+	Email     string             `json:"email" bson:"email"`
+	FirstName string             `json:"firstName" bson:"firstName"`
+	LastName  string             `json:"lastName" bson:"lastName"`
 }
 
 func GenerateToken(user *repo.User) (string, error) {
@@ -25,7 +26,8 @@ func GenerateToken(user *repo.User) (string, error) {
 	claims := token.Claims.(jwt.MapClaims)
 	claims["id"] = user.ID.Hex()
 	claims["email"] = user.Email
-	claims["fullName"] = user.FullName
+	claims["firstName"] = user.FirstName
+	claims["lastName"] = user.LastName
 
 	expiryDate := time.Now().AddDate(0, 0, 7)
 	claims["expiryDate"] = expiryDate
@@ -99,9 +101,10 @@ func CheckJWTClaims(db *mongo.Database, header string) (*UserClaims, error) {
 		}
 
 		userClaims := &UserClaims{
-			ID:       user.ID,
-			Email:    user.Email,
-			FullName: user.FullName,
+			ID:        user.ID,
+			Email:     user.Email,
+			FirstName: user.FirstName,
+			LastName:  user.LastName,
 		}
 
 		return userClaims, nil

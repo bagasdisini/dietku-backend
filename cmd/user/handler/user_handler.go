@@ -73,8 +73,11 @@ func (h *UserHandler) UpdateMe(c echo.Context) error {
 	if updateParam.Email != "" {
 		meData.Email = updateParam.Email
 	}
-	if updateParam.FullName != "" {
-		meData.FullName = updateParam.FullName
+	if updateParam.FirstName != "" {
+		meData.FirstName = updateParam.FirstName
+	}
+	if updateParam.LastName != "" {
+		meData.LastName = updateParam.LastName
 	}
 	if updateParam.Password != "" {
 		meData.Password = updateParam.Password

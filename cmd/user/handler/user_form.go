@@ -7,9 +7,10 @@ import (
 )
 
 type UserUpdateForm struct {
-	Email    string `form:"email" json:"email"`
-	Password string `form:"password" json:"password"`
-	FullName string `form:"fullname" json:"fullname"`
+	Email     string `form:"email" json:"email"`
+	Password  string `form:"password" json:"password"`
+	FirstName string `form:"firstName" json:"firstName"`
+	LastName  string `form:"lastName" json:"lastName"`
 }
 
 func NewUserUpdateForm(c echo.Context) (*UserUpdateForm, error) {
@@ -25,6 +26,5 @@ func NewUserUpdateForm(c echo.Context) (*UserUpdateForm, error) {
 	if len(form.Password) > 0 && len(form.Password) < 6 {
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "Password must be at least 6 characters")
 	}
-
 	return form, nil
 }

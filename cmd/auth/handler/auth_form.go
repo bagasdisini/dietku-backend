@@ -30,9 +30,12 @@ func NewLoginForm(c echo.Context) (*LoginForm, error) {
 }
 
 type RegisterForm struct {
-	Email    string `form:"email" json:"email"`
-	Password string `form:"password" json:"password"`
-	FullName string `json:"fullname" bson:"fullname"`
+	FirstName string `form:"firstName" json:"firstName"`
+	LastName  string `form:"lastName" json:"lastName"`
+	BirthDay  string `form:"birthDay" json:"birthDay"`
+	Phone     string `form:"phone" json:"phone"`
+	Email     string `form:"email" json:"email"`
+	Password  string `form:"password" json:"password"`
 }
 
 func NewRegisterForm(c echo.Context) (*RegisterForm, error) {
@@ -50,9 +53,24 @@ func NewRegisterForm(c echo.Context) (*RegisterForm, error) {
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "Password must be at least 6 characters")
 	}
 
-	form.FullName = strings.TrimSpace(form.FullName)
-	if form.FullName == "" {
-		return nil, echo.NewHTTPError(http.StatusBadRequest, "Fullname is required")
+	form.FirstName = strings.TrimSpace(form.FirstName)
+	if form.FirstName == "" {
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "FirstName is required")
+	}
+
+	form.LastName = strings.TrimSpace(form.LastName)
+	if form.LastName == "" {
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "LastName is required")
+	}
+
+	form.BirthDay = strings.TrimSpace(form.BirthDay)
+	if form.BirthDay == "" {
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "BirthDay is required")
+	}
+
+	form.Phone = strings.TrimSpace(form.Phone)
+	if form.Phone == "" {
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "Phone is required")
 	}
 	return form, nil
 }

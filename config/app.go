@@ -9,12 +9,15 @@ import (
 
 // Config is a struct to store configuration from .env file
 type Config struct {
-	AppHost      string `mapstructure:"APP_HOST"`
-	AppPort      string `mapstructure:"PORT"`
-	SwaggerHost  string `mapstructure:"SWAGGER_HOST"`
-	DBUrl        string `mapstructure:"MONGODB_URI"`
-	DBName       string `mapstructure:"MONGODB_NAME"`
-	AllowOrigins string `mapstructure:"CORS_ALLOW_ORIGINS"`
+	AppHost            string `mapstructure:"APP_HOST"`
+	AppPort            string `mapstructure:"PORT"`
+	SwaggerHost        string `mapstructure:"SWAGGER_HOST"`
+	DBUrl              string `mapstructure:"MONGODB_URI"`
+	DBName             string `mapstructure:"MONGODB_NAME"`
+	AllowOrigins       string `mapstructure:"CORS_ALLOW_ORIGINS"`
+	StateString        string `mapstructure:"OAUTH_STATE_STRING"`
+	GoogleClientID     string `mapstructure:"GOOGLE_CLIENT_ID"`
+	GoogleClientSecret string `mapstructure:"GOOGLE_CLIENT_SECRET"`
 }
 
 // InitConfigApp loads configuration from .env file
@@ -33,6 +36,9 @@ func InitConfigApp(path string) (*Config, error) {
 	config.DBName = os.Getenv("MONGODB_NAME")
 	config.AllowOrigins = os.Getenv("CORS_ALLOW_ORIGINS")
 	config.DBUrl = os.Getenv("MONGODB_URI")
+	config.StateString = os.Getenv("OAUTH_STATE_STRING")
+	config.GoogleClientID = os.Getenv("GOOGLE_CLIENT_ID")
+	config.GoogleClientSecret = os.Getenv("GOOGLE_CLIENT_SECRET")
 
 	if config.DBUrl == "" {
 		return &Config{}, errors.New("please check your database setting")

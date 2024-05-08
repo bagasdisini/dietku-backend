@@ -150,7 +150,7 @@ func (h *BlogHandler) Create(c echo.Context) error {
 		CreatedBy: repo.By{
 			ID:       tokenData.ID,
 			Email:    tokenData.Email,
-			FullName: tokenData.FullName,
+			FullName: tokenData.FirstName + " " + tokenData.LastName,
 			At:       time.Now(),
 		},
 	}
@@ -221,7 +221,7 @@ func (h *BlogHandler) Update(c echo.Context) error {
 	blog.UpdatedBy = &repo.By{
 		ID:       tokenData.ID,
 		Email:    tokenData.Email,
-		FullName: tokenData.FullName,
+		FullName: tokenData.FirstName + " " + tokenData.LastName,
 	}
 
 	docs, err := h.repo.UpdateOne(blog)
